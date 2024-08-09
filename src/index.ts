@@ -1,7 +1,7 @@
 import cookieParser from 'cookie-parser';
 import express, { Express } from "express";
 import session from "express-session";
-// import passport from "passport";
+
 import ApplicationRouter from "./routes/applicant";
 import AuthRouter from "./routes/auth";
 import CategoryRouter from "./routes/category";
@@ -17,14 +17,13 @@ import { PrismaClient } from "@prisma/client";
 import MaintenanceRouter from "./routes/maintenance";
 import VendorServiceRouter from "./routes/services";
 import WalletRouter from "./routes/wallet";
-import { startCreditScoreUpdateJob } from './services/creditScore/crediScoreUpdateService';
-import dashboardService from './services/dashboard/dashboard.service';
 import paystackServices from "./services/paystack.services";
 import AdsRouter from "./tenant/routes/ads.routes";
 import CommunityPostRouter from "./tenant/routes/community-post.routes";
 import communityRoutes from "./tenant/routes/community.routes";
 import TenantDashboardRouter from "./tenant/routes/dashboard.routes";
 import SupportRouter from "./tenant/routes/support-tenant.routes";
+import JobManager from './jobManager';
 
 
 export const prismaClient: PrismaClient = new PrismaClient(
@@ -44,8 +43,6 @@ class Server {
         this.appSecret = secret;
         this.configureMiddlewares();
         this.configureRoutes();
-        startCreditScoreUpdateJob()
-        dashboardService.initializeBagroundJobs()
     }
 
     private configureMiddlewares() {
@@ -82,13 +79,13 @@ class Server {
         this.app.use("/api/wallet", WalletRouter);
         this.app.use("/api/tenant/dashboard", TenantDashboardRouter);
 
-   }
+    }
 
     public start() {
         this.app.listen(this.port, () => {
             console.log(`Server running on port ${this.port}`);
         });
-
+        JobManager.startJobs()
     }
 }
 
