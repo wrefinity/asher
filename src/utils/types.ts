@@ -12,6 +12,27 @@ export interface CustomRequest extends Request {
     files: {
         [fieldname: string]: Express.Multer.File[];
     };
+    params: {
+
+        maintenanceId?: string;
+        applicationId?: string;
+        apartmentId?: string;
+        propertyId?: string;
+        propertiesId?: string;
+        chatRoomId?: string;
+        inviteCode?: string;
+        ticketId?: string;
+        categoryId?: string;
+        communityId?: string;
+        receiverId?: string;
+        userId?: string;
+        communityPostId?: string;
+        emailId?: string;
+        profileId?: string;
+        adsId?: string;
+        id?: string;
+
+    }
 }
 
 export type EmailDataType = {
@@ -93,9 +114,9 @@ export interface WebHookData {
     fees_split: any | null;
     authorization: Authorization;
     customer: Customer;
-    plan: object; // Assuming plan is an object, specify further if needed
-    subaccount: object; // Assuming subaccount is an object, specify further if needed
-    split: object; // Assuming split is an object, specify further if needed
+    plan: object;
+    subaccount: object;
+    split: object;
     order_id: string | null;
     paidAt: string;
     requested_amount: number;

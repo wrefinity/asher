@@ -1,21 +1,23 @@
 import cookieParser from 'cookie-parser';
 import express, { Express } from "express";
 import session from "express-session";
+// import passport from "passport";
+import connectDB from './db/mongo_connnect';
+import { PORT, APP_SECRET } from "./secrets";
+import AuthRouter from "./routes/auth"
+import ProfileRouter from "./routes/profile"
+import StatusRouter from "./routes/status"
+import ApplicationRouter from "./routes/applicant"
+import ChatRoomRouter from "./routes/chats"
+import EmailRouter from "./routes/email"
+import PropertyRouter from "./routes/property"
+import CategoryRouter from "./routes/category"
+import TransactionRouter from "./routes/transaction"
+import NotificationRouter from "./routes/notification"
 
-import ApplicationRouter from "./routes/applicant";
-import AuthRouter from "./routes/auth";
-import CategoryRouter from "./routes/category";
-import ChatRoomRouter from "./routes/chats";
-import EmailRouter from "./routes/email";
-import ProfileRouter from "./routes/profile";
-import PropertyRouter from "./routes/property";
-import StatusRouter from "./routes/status";
-import TransactionRouter from "./routes/transaction";
-import { APP_SECRET, PORT } from "./secrets";
-
+import VendorServiceRouter from "./routes/services"
+import MaintenanceRouter from "./routes/maintenance"
 import { PrismaClient } from "@prisma/client";
-import MaintenanceRouter from "./routes/maintenance";
-import VendorServiceRouter from "./routes/services";
 import WalletRouter from "./routes/wallet";
 import paystackServices from "./services/paystack.services";
 import AdsRouter from "./tenant/routes/ads.routes";
@@ -41,6 +43,7 @@ class Server {
         this.app = express();
         this.port = port;
         this.appSecret = secret;
+        connectDB();
         this.configureMiddlewares();
         this.configureRoutes();
     }
@@ -63,6 +66,7 @@ class Server {
         this.app.post("/paystack/webhook", (req, res) => paystackServices.handleWebhook(req, res))
         this.app.use("/api/auth", AuthRouter);
         this.app.use("/api/status", StatusRouter);
+        this.app.use("/api/notification", NotificationRouter)
         this.app.use("/api/categories", CategoryRouter)
         this.app.use("/api/profile", ProfileRouter);
         this.app.use("/api/vendor/services", VendorServiceRouter);
@@ -73,7 +77,6 @@ class Server {
         this.app.use("/api/maintenance", MaintenanceRouter);
         this.app.use("/api/community-post", CommunityPostRouter)
         this.app.use("/api/tenants/community", communityRoutes);
-        this.app.use("/api/support", SupportRouter);
         this.app.use("/api/ads", AdsRouter);
         this.app.use("/api/transactions", TransactionRouter);
         this.app.use("/api/wallet", WalletRouter);

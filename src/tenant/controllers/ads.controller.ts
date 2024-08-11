@@ -30,7 +30,7 @@ class AdController {
     }
 
     // turn ad to listed so we can display it
-    async listAd(req: Request, res: Response) {
+    async listAd(req: CustomRequest, res: Response) {
         //NOTE: check if it is an admin listing this
         try {
             const { adsId } = req.params;
@@ -40,7 +40,7 @@ class AdController {
             errorService.handleError(error, res)
         }
     }
-    async getAdsById(req: Request, res: Response) {
+    async getAdsById(req: CustomRequest, res: Response) {
         try {
             const { adsId } = req.params;
             const ads = await adsServices.getAdById(adsId)
@@ -91,7 +91,7 @@ class AdController {
         }
     }
 
-    async incrementAdsStats(req: Request, res: Response) {
+    async incrementAdsStats(req: CustomRequest, res: Response) {
         //statsType is and enum of views, click & reach
         try {
             const { adsId } = req.params;
@@ -103,7 +103,7 @@ class AdController {
         }
     }
 
-    async getAdStats(req: Request, res: Response) {
+    async getAdStats(req: CustomRequest, res: Response) {
         try {
             const { adsId } = req.params;
             const ads = await adsServices.getAdStats(adsId)
@@ -116,7 +116,7 @@ class AdController {
         }
     }
 
-    async getAdsByUser(req: Request, res: Response) {
+    async getAdsByUser(req: CustomRequest, res: Response) {
         try {
             const { userId } = req.params;
             const ads = await adsServices.getAdsByUserId(userId)
