@@ -33,7 +33,7 @@ class AdController {
     async listAd(req: CustomRequest, res: Response) {
         //NOTE: check if it is an admin listing this
         try {
-            const { adsId } = req.params;
+            const adsId = req.params.adsId;
             const ads = await adsServices.listAds(adsId)
             return res.status(200).json(ads)
         } catch (error) {

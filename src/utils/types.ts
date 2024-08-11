@@ -12,29 +12,26 @@ export interface CustomRequest extends Request {
     files: {
         [fieldname: string]: Express.Multer.File[];
     };
-    params: {
-
-        maintenanceId?: string;
-        applicationId?: string;
-        apartmentId?: string;
-        propertyId?: string;
-        propertiesId?: string;
-        chatRoomId?: string;
-        inviteCode?: string;
-        ticketId?: string;
-        categoryId?: string;
-        communityId?: string;
-        receiverId?: string;
-        userId?: string;
-        communityPostId?: string;
-        emailId?: string;
-        profileId?: string;
-        adsId?: string;
-        id?: string;
-
+    params:{
+        maintenanceId?:string;
+        applicationId?:string;
+        apartmentId?:string;
+        propertyId?:string;
+        propertiesId?:string;
+        chatRoomId?:string;
+        inviteCode?:string;
+        ticketId?:string;
+        categoryId?:string;
+        communityId?:string;
+        receiverId?:string;
+        userId?:string;
+        communityPostId?:string;
+        emailId?:string;
+        profileId?:string;
+        adsId?:string;
+        id?:string;
     }
 }
-
 export type EmailDataType = {
     senderEmail: string;
     recieverEmail: string;
